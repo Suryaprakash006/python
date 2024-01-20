@@ -1,0 +1,5 @@
+Flask==2.0.1
+Pillow==8.2.0
+gTTS==2.2.3
+pytesseract==0.3.8
+opencv-python==4.5.3

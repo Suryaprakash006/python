@@ -1,0 +1,183 @@
+[
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "send_file",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "gTTS",
+        "importPath": "gtts",
+        "description": "gtts",
+        "isExtraImport": true,
+        "detail": "gtts",
+        "documentation": {}
+    },
+    {
+        "label": "pytesseract",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytesseract",
+        "description": "pytesseract",
+        "detail": "pytesseract",
+        "documentation": {}
+    },
+    {
+        "label": "sleep",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "capture_image",
+        "kind": 2,
+        "importPath": "static.capture_image",
+        "description": "static.capture_image",
+        "peekOfCode": "def capture_image(image_path=r\"C:\\Users\\surya\\static\"):\n    # Open the webcam\n    cap = cv2.VideoCapture(0)\n    # Capture a single frame\n    ret, frame = cap.read()\n    # Save the captured frame as an image\n    cv2.imwrite(image_path, frame)\n    # Release the webcam\n    cap.release()\n    return image_path",
+        "detail": "static.capture_image",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def index():\n    return render_template('index.html')\n@app.route('/capture', methods=['POST'])\ndef capture():\n    image_path = 'static/captured_image.png'\n    os.system('start /min python capture_image.py')  # Assuming you have a separate script for image capture\n    sleep(5)  # Wait for the capture to complete\n    text = ocr_tamil(image_path)\n    return jsonify({'text': text})\n@app.route('/text_to_speech', methods=['POST'])",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "capture",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def capture():\n    image_path = 'static/captured_image.png'\n    os.system('start /min python capture_image.py')  # Assuming you have a separate script for image capture\n    sleep(5)  # Wait for the capture to complete\n    text = ocr_tamil(image_path)\n    return jsonify({'text': text})\n@app.route('/text_to_speech', methods=['POST'])\ndef text_to_speech():\n    text = request.form.get('text')\n    output_file = 'static/output.mp3'",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "text_to_speech",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def text_to_speech():\n    text = request.form.get('text')\n    output_file = 'static/output.mp3'\n    tts = gTTS(text=text, lang='ta')\n    tts.save(output_file)\n    # Play the generated audio file using the default system player\n    subprocess.run(['start', 'cmd', '/c', f'start {output_file}'], shell=True)\n    return send_file(output_file, as_attachment=True)\ndef ocr_tamil(image_path):\n    text = pytesseract.image_to_string(Image.open(image_path), lang='tam')",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "ocr_tamil",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def ocr_tamil(image_path):\n    text = pytesseract.image_to_string(Image.open(image_path), lang='tam')\n    return text\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\npytesseract.pytesseract.tesseract_cmd = r\"C:\\Program Files\\Tesseract-OCR\\tesseract.exe\"\nos.environ['TESSDATA_PREFIX'] = r'D:\\Downloads'\n@app.route('/')\ndef index():\n    return render_template('index.html')\n@app.route('/capture', methods=['POST'])\ndef capture():\n    image_path = 'static/captured_image.png'\n    os.system('start /min python capture_image.py')  # Assuming you have a separate script for image capture",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "pytesseract.pytesseract.tesseract_cmd",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "pytesseract.pytesseract.tesseract_cmd = r\"C:\\Program Files\\Tesseract-OCR\\tesseract.exe\"\nos.environ['TESSDATA_PREFIX'] = r'D:\\Downloads'\n@app.route('/')\ndef index():\n    return render_template('index.html')\n@app.route('/capture', methods=['POST'])\ndef capture():\n    image_path = 'static/captured_image.png'\n    os.system('start /min python capture_image.py')  # Assuming you have a separate script for image capture\n    sleep(5)  # Wait for the capture to complete",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ['TESSDATA_PREFIX']",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "os.environ['TESSDATA_PREFIX'] = r'D:\\Downloads'\n@app.route('/')\ndef index():\n    return render_template('index.html')\n@app.route('/capture', methods=['POST'])\ndef capture():\n    image_path = 'static/captured_image.png'\n    os.system('start /min python capture_image.py')  # Assuming you have a separate script for image capture\n    sleep(5)  # Wait for the capture to complete\n    text = ocr_tamil(image_path)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "capture_image",
+        "kind": 2,
+        "importPath": "capture_image",
+        "description": "capture_image",
+        "peekOfCode": "def capture_image(image_path='static/captured_image.png'):\n    # Open the webcam\n    cap = cv2.VideoCapture(0)\n    # Capture a single frame\n    ret, frame = cap.read()\n    # Save the captured frame as an image\n    cv2.imwrite(image_path, frame)\n    # Release the webcam\n    cap.release()\n    return image_path",
+        "detail": "capture_image",
+        "documentation": {}
+    }
+]
