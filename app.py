@@ -8,8 +8,8 @@ import subprocess
 
 app = Flask(__name__)
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-os.environ['TESSDATA_PREFIX'] = r'D:\Downloads'
+pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
+os.environ['TESSDATA_PREFIX'] = r'/usr/bin/tesseract/tessdata'
 @app.route('/')
 def index():
     return render_template('index.html')
