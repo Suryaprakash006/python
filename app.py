@@ -7,9 +7,9 @@ from time import sleep
 import subprocess
 
 app = Flask(__name__)
-<<<<<<< HEAD
+
 os.environ['TESSDATA_PREFIX'] = r'teseract/' 
-=======
+
 
 # Find Tesseract installation path dynamically
 def find_tesseract_cmd():
@@ -34,7 +34,7 @@ if tessdata_prefix:
 else:
     os.environ['TESSDATA_PREFIX'] = r'D:\Downloads'
 
->>>>>>> bd6e4b4a59b3ab5cd1d16e92f2974a34b535392b
+
 @app.route('/')
 def index():
     return render_template('index.html')

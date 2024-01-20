@@ -5,7 +5,4 @@ pytesseract==0.3.8
 opencv-python==4.5.5.62  # Latest available version
 gunicorn==20.1.0
 werkzeug==2.0.1
-<<<<<<< HEAD
-=======
 
->>>>>>> bd6e4b4a59b3ab5cd1d16e92f2974a34b535392b
