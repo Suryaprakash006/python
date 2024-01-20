@@ -7,9 +7,7 @@ from time import sleep
 import subprocess
 
 app = Flask(__name__)
-
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-os.environ['TESSDATA_PREFIX'] = r'D:\Downloads'
+os.environ['TESSDATA_PREFIX'] = r'teseract/' 
 @app.route('/')
 def index():
     return render_template('index.html')
