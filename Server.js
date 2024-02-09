@@ -1,38 +1,42 @@
-const PORT = process.env.PORT || 5000; // Defining the PORT we used for communication server
-const INDEX =  '/index.html' // Page for the website
-const express = require('express') // Node.js Application Framework
-const WebSocket = require('ws') // Websocket Protocol Library
+const express = require('express');
+const app = express();
+const http = require('http');
+const WebSocket = require('ws');
+const path = require('path');
 
-// Opening up the server using basic express library
-const server = express()
-    .use(express.static( __dirname + '/public')) // This is basically static, heroku does't support file storage in their 
-                                                //system so we have to make it static so style.css and index.js can be accessed in our website
-    .get('/', (req,res) =>{
-    res.sendFile(INDEX, {root : __dirname})}) //Basic Routing when website hit '/', respond serve index.html
-    .listen(PORT, ()=> console.log(`Listening on ${PORT}`))
+const PORT = process.env.PORT || 3000;
 
-// Opening or upgrade server to websocket server
-const { Server } = require('ws')
+// Create HTTP server
+const server = http.createServer(app);
 
-// Implement Websocket Connection, the handskae are put in here
-const wss = new Server({ server }) // This will now upgrade the listener to websocket connection whenever we hit '/' page index at website
+// Create WebSocket server
+const wss = new WebSocket.Server({ server });
 
-// Implementing when handsake completed
-wss.on('connection', function connection(ws,req){ // Taking the event, when handsake completed go 
-    console.log("A Client has connected")
-    console.log(`Now on Port ${PORT}`)
-    ws.on('message', function incoming (data){ // Taking the event data incoming message, what to do going below
-        console.log(data.toString('utf-8'),"data")
-        wss.clients.forEach(function each(client){ // If ws detect message, take all current clients connected    
-            if(client != ws && client.readyState === WebSocket.OPEN){ //Ready state constant CONNECTION = 0 | OPEN = 1 | CLOSING = 2 | CLOSED = 3
-                client.send(data.toString('utf8')) // If it's true some client open and sending message, send that data to all
-            }
-        })
-    })
-})
+// WebSocket connection handler
+wss.on('connection', function connection(ws) {
+  console.log('vanakam da mapla server la irunthu!');
+  ws.send('Welcome, new client!');
 
-// Implementing when websocket connection in this client close
-wss.on('close', function close(){
-    console.log("Web Socket Closing")
-}) // Which is impossible, because server always running, in this case heroku has implemented if there is no activities in
-   // Duration of 6 hours, server will sleep 
+  // WebSocket message handler
+  ws.on('message', function incoming(message) {
+    console.log('Received: %s', message);
+
+    // Broadcast message to all clients except the sender
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+});
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'public')));
+}
+
+// Define routes
+app.get('/', (req, res) => res.send('Hello, World!'));
+
+// Start the server
+server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
