@@ -10,6 +10,11 @@
     "mqtt": "^5.3.5",
     "socket.io": "^4.7.4",
     "mongoose": "^6.9.2",
-    "ws": "^8.16.0"
+    "ws": "^8.16.0",
+    "dotenv": "^16.0.3",
+    "body-parser": "^1.20.2",
+    "cloudinary": "^1.36.4",
+    "cors": "^2.8.5",
+    "swagger-ui-express": "^4.6.1"
   }
 }
