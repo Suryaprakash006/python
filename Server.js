@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://suryasakthi8870:sasuanudogy@cluster0.3dletx8.mon
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
-mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', true);
 
 // Create an HTTP server using Express app
 const server = http.createServer(app);
